@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("/characters")
+    @GET("/api/characters")
     suspend fun loadCharacters(): Response<List<HPCharacter>>
 }

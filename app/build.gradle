@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "HP_BASE_URL", "\"https://hp-api.onrender.com/\""
     }
 
     buildTypes {
