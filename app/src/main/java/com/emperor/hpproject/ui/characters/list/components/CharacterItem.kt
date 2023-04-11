@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.emperor.hpproject.R
 import com.emperor.hpproject.domain.models.HPCharacter
-import com.emperor.hpproject.ui.theme.EnricoFaVasiProjectTheme
+import com.emperor.hpproject.ui.theme.AppTheme
 import com.emperor.hpproject.utils.hpCharacterMock
 
 @Composable
@@ -55,7 +55,7 @@ fun CharacterItem(character: HPCharacter) {
 @Composable
 @Preview(showBackground = true)
 fun CharacterItemPreview() {
-    EnricoFaVasiProjectTheme {
+    AppTheme {
         CharacterItem(hpCharacterMock)
     }
 }
