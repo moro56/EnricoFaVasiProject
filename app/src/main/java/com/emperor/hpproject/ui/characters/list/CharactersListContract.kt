@@ -12,11 +12,13 @@ class CharactersListContract {
     /**
      * State
      *
-     * @param characterList list of characters
+     * @param studentList list of student characters
+     * @param staffList list of staff characters
      * @param loading is loading
      */
     data class State(
-        val characterList: List<HPCharacter>,
+        val studentList: List<HPCharacter>,
+        val staffList: List<HPCharacter>,
         val loading: Boolean
     ) : UiState
 
