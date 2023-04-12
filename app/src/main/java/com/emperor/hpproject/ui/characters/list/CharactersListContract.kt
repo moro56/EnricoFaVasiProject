@@ -17,7 +17,7 @@ class CharactersListContract {
      * @param loading is loading
      */
     data class State(
-        val studentList: List<HPCharacter>,
+        val studentList: Map<String, List<HPCharacter>>,
         val staffList: List<HPCharacter>,
         val loading: Boolean
     ) : UiState

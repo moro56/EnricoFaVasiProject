@@ -17,7 +17,7 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
     }
 
     override fun createInitialState() =
-        CharactersListContract.State(studentList = listOf(), staffList = listOf(), loading = false)
+        CharactersListContract.State(studentList = mapOf(), staffList = listOf(), loading = false)
 
     override fun handleEvent(event: CharactersListContract.Event) {
     }
@@ -29,7 +29,7 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
             is DomainResponse.Success -> setState {
                 copy(
                     loading = false,
-                    studentList = response.result.filter { it.hogwartsStudent },
+                    studentList = response.result.filter { it.hogwartsStudent }.groupBy { it.house },
                     staffList = response.result.filter { it.hogwartsStaff }
                 )
             }
