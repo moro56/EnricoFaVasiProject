@@ -7,11 +7,13 @@ import com.emperor.hpproject.domain.models.DomainResponse
  *
  * @param request the Api request
  */
-suspend fun <T> wrapInDomainResponse(request: suspend () -> T?): DomainResponse<T> {
+suspend fun <T> wrapInDomainResponse(request: suspend () -> T?): DomainResponse<T> = try {
     val response = request.invoke()
-    return if (response != null) {
+    if (response != null) {
         DomainResponse.Success(response)
     } else {
         DomainResponse.Error(Exception())
     }
+} catch (e: Exception) {
+    DomainResponse.Error(e)
 }
