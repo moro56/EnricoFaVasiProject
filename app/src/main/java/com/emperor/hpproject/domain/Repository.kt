@@ -2,13 +2,19 @@ package com.emperor.hpproject.domain
 
 import com.emperor.hpproject.domain.models.DomainResponse
 import com.emperor.hpproject.domain.models.HPCharacter
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
     /**
-     * Load all the HP characters
+     * Download the character list from the server
+     */
+    suspend fun downloadCharacters(): DomainResponse<Unit>
+
+    /**
+     * Observe all the HP characters
      *
      * @return list of HP characters
      */
-    suspend fun loadAllCharacters(): DomainResponse<List<HPCharacter>>
+    suspend fun observeAllCharacters(): Flow<List<HPCharacter>>
 }

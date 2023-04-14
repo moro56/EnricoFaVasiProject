@@ -2,9 +2,9 @@ package com.emperor.hpproject.ui.characters.list
 
 import androidx.lifecycle.viewModelScope
 import com.emperor.hpproject.domain.Repository
-import com.emperor.hpproject.domain.models.DomainResponse
 import com.emperor.hpproject.utils.mvi.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,13 +24,13 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
 
     private fun loadCharacters() = viewModelScope.launch {
         setState { copy(loading = true) }
-        when (val response = repository.loadAllCharacters()) {
-            is DomainResponse.Error -> setState { copy(loading = false) }
-            is DomainResponse.Success -> setState {
+        repository.observeAllCharacters().collectLatest { list ->
+            setState {
                 copy(
                     loading = false,
-                    studentList = response.result.filter { it.hogwartsStudent }.groupBy { it.house },
-                    staffList = response.result.filter { it.hogwartsStaff }
+                    studentList = list.filter { it.hogwartsStudent }
+                        .groupBy { it.house },
+                    staffList = list.filter { it.hogwartsStaff }
                 )
             }
         }

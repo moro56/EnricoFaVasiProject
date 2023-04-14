@@ -16,6 +16,7 @@ import javax.inject.Singleton
 object LocalModule {
 
     @Provides
+    @Singleton
     fun provideCharacterDao(appDatabase: AppDatabase): CharacterDao {
         return appDatabase.characterDao()
     }
