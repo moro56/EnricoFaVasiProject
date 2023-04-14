@@ -48,6 +48,11 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -72,6 +77,8 @@ dependencies {
     testImplementation 'io.mockk:mockk-android:1.13.4'
     testImplementation 'io.mockk:mockk-agent:1.13.4'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    testImplementation 'org.robolectric:robolectric:4.9.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
