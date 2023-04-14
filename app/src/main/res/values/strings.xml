@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">EnricoFaVasiProject</string>
+    <string name="app_name">HPProject</string>
+
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+
+    <string name="character_is_wizard">Wizard:</string>
+    <string name="character_students">Students</string>
+    <string name="character_staff">Staff</string>
+    <string name="character_no_house">No House</string>
 </resources>

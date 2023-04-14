@@ -2,7 +2,7 @@ package com.emperor.hpproject.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-data class HPCharacter(
+data class RemoteHPCharacter(
     val id: String,
     val name: String,
     @SerializedName("alternate_names")
@@ -16,7 +16,7 @@ data class HPCharacter(
     val ancestry: String,
     val eyeColour: String,
     val hairColour: String,
-    val wand: HPWand,
+    val wand: RemoteHPWand,
     val patronus: String,
     val hogwartsStudent: Boolean,
     val hogwartsStaff: Boolean,
