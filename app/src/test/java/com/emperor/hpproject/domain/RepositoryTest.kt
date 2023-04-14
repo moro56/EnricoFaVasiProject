@@ -1,12 +1,17 @@
 package com.emperor.hpproject.domain
 
+import com.emperor.hpproject.data.local.dao.CharacterDao
 import com.emperor.hpproject.data.network.RestApi
 import com.emperor.hpproject.data.network.models.RemoteHPCharacter
 import com.emperor.hpproject.data.network.models.RemoteHPWand
+import com.emperor.hpproject.domain.ext.toLocalHPCharacterList
 import com.emperor.hpproject.domain.models.DomainResponse
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -19,25 +24,40 @@ class RepositoryTest {
 
     @Before
     fun setUp() {
-        repository = RepositoryImpl(restApi)
+        repository = RepositoryImpl(restApi, characterDao)
     }
 
     @Test
     fun `load characters is successful`() = runTest {
-        coEvery { restApi.loadAllCharacters() } returns listOf(characterMock1, characterMock2)
+        coEvery { characterDao.getAllCharacters() } returns flowOf(
+            listOf(
+                characterMock1,
+                characterMock2
+            ).toLocalHPCharacterList()
+        )
 
-        val result = repository.loadAllCharacters()
+        val result = repository.observeAllCharacters().single()
 
         Assert.assertNotNull(result)
-        Assert.assertTrue(result is DomainResponse.Success)
-        Assert.assertEquals(2, (result as DomainResponse.Success).result.size)
+        Assert.assertEquals(2, result.size)
     }
 
     @Test
-    fun `load characters fails`() = runTest {
+    fun `download characters is successful`() = runTest {
+        coEvery { restApi.loadAllCharacters() } returns listOf(characterMock1, characterMock2)
+        coJustRun { characterDao.insertAll(any(), any()) }
+
+        val result = repository.downloadCharacters()
+
+        Assert.assertNotNull(result)
+        Assert.assertTrue(result is DomainResponse.Success)
+    }
+
+    @Test
+    fun `download characters fails`() = runTest {
         coEvery { restApi.loadAllCharacters() } throws Exception("error")
 
-        val result = repository.loadAllCharacters()
+        val result = repository.downloadCharacters()
 
         Assert.assertNotNull(result)
         Assert.assertTrue(result is DomainResponse.Error)
@@ -47,6 +67,8 @@ class RepositoryTest {
     /** MOCKS */
 
     private val restApi: RestApi = mockk()
+
+    private val characterDao: CharacterDao = mockk()
 
     private val characterMock1 = RemoteHPCharacter(
         id = "9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8",
