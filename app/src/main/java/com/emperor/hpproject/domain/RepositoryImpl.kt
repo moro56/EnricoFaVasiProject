@@ -2,6 +2,7 @@ package com.emperor.hpproject.domain
 
 import com.emperor.hpproject.data.local.dao.CharacterDao
 import com.emperor.hpproject.data.network.RestApi
+import com.emperor.hpproject.domain.ext.toHPCharacter
 import com.emperor.hpproject.domain.ext.toHPCharacterList
 import com.emperor.hpproject.domain.ext.toLocalHPCharacterList
 import com.emperor.hpproject.domain.ext.wrapInDomainResponse
@@ -33,5 +34,10 @@ class RepositoryImpl @Inject constructor(
     override suspend fun filterCharacters(name: String): DomainResponse<List<HPCharacter>> =
         wrapInDomainResponse {
             characterDao.getFilteredCharacters("%$name%").toHPCharacterList()
+        }
+
+    override suspend fun getCharacter(id: String): DomainResponse<HPCharacter> =
+        wrapInDomainResponse {
+            characterDao.getCharacterById(id)?.toHPCharacter()
         }
 }
