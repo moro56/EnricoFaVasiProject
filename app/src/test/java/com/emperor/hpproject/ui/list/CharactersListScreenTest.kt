@@ -55,7 +55,7 @@ class CharactersListScreenTest {
 
         composeTestRule.setContent {
             AppTheme {
-                CharactersListScreen(modifier = Modifier, viewModel = viewModel)
+                CharactersListScreen(modifier = Modifier, onClick = {}, viewModel = viewModel)
             }
         }
 
@@ -78,7 +78,7 @@ class CharactersListScreenTest {
 
         composeTestRule.setContent {
             AppTheme {
-                CharactersListScreen(modifier = Modifier, viewModel = viewModel)
+                CharactersListScreen(modifier = Modifier, onClick = {}, viewModel = viewModel)
             }
         }
 
