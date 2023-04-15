@@ -48,6 +48,7 @@ class CharactersListScreenTest {
                     )
                 ),
                 staffList = listOf(),
+                searchedList = listOf(),
                 loading = false
             )
         ).asStateFlow()
@@ -70,6 +71,7 @@ class CharactersListScreenTest {
             CharactersListContract.State(
                 studentList = mapOf(),
                 staffList = listOf(hpCharacterMock),
+                searchedList = listOf(),
                 loading = false
             )
         ).asStateFlow()

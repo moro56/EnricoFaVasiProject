@@ -13,8 +13,11 @@ interface Repository {
 
     /**
      * Observe all the HP characters
-     *
-     * @return list of HP characters
      */
     suspend fun observeAllCharacters(): Flow<List<HPCharacter>>
+
+    /**
+     * Filter character list
+     */
+    suspend fun filterCharacters(name: String): DomainResponse<List<HPCharacter>>
 }

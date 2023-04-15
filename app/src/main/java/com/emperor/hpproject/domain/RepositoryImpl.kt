@@ -8,6 +8,7 @@ import com.emperor.hpproject.domain.ext.wrapInDomainResponse
 import com.emperor.hpproject.domain.models.DomainResponse
 import com.emperor.hpproject.domain.models.HPCharacter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -25,5 +26,12 @@ class RepositoryImpl @Inject constructor(
     override suspend fun observeAllCharacters(): Flow<List<HPCharacter>> =
         characterDao.getAllCharacters().map {
             it.toHPCharacterList()
+        }.catch {
+            emit(listOf())
+        }
+
+    override suspend fun filterCharacters(name: String): DomainResponse<List<HPCharacter>> =
+        wrapInDomainResponse {
+            characterDao.getFilteredCharacters("%$name%").toHPCharacterList()
         }
 }

@@ -13,6 +13,9 @@ interface CharacterDao {
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): Flow<List<LocalHPCharacter>>
 
+    @Query("SELECT * FROM characters WHERE name LIKE :name")
+    suspend fun getFilteredCharacters(name: String): List<LocalHPCharacter>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(vararg characters: LocalHPCharacter)
 }
