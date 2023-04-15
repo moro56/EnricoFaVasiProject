@@ -16,12 +16,22 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
         loadCharacters()
     }
 
-    override fun createInitialState() =
-        CharactersListContract.State(studentList = mapOf(), staffList = listOf(), loading = false)
+    override fun createInitialState() = CharactersListContract.State(
+        studentList = mapOf(),
+        staffList = listOf(),
+        searchedList = listOf(),
+        loading = false
+    )
 
     override fun handleEvent(event: CharactersListContract.Event) {
+        when (event) {
+            is CharactersListContract.Event.SearchCharacters -> searchCharacters(event.value)
+        }
     }
 
+    /**
+     * Load all characters
+     */
     private fun loadCharacters() = viewModelScope.launch {
         setState { copy(loading = true) }
         repository.observeAllCharacters().collectLatest { list ->
@@ -34,5 +44,15 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
                 )
             }
         }
+    }
+
+    /**
+     * Search characters
+     *
+     * @param value search param
+     */
+    private fun searchCharacters(value: String) = viewModelScope.launch {
+        val filteredCharacters = repository.filterCharacters(value.trim())
+        setState { copy(searchedList = filteredCharacters) }
     }
 }

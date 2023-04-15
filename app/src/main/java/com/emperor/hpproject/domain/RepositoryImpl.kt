@@ -26,4 +26,7 @@ class RepositoryImpl @Inject constructor(
         characterDao.getAllCharacters().map {
             it.toHPCharacterList()
         }
+
+    override suspend fun filterCharacters(name: String): List<HPCharacter> =
+        characterDao.getFilteredCharacters("%$name%").toHPCharacterList()
 }

@@ -3,6 +3,7 @@
 
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="search">Search</string>
 
     <string name="character_is_wizard">Wizard:</string>
     <string name="character_students">Students</string>
