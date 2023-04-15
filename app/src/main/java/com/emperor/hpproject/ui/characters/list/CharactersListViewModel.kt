@@ -2,6 +2,7 @@ package com.emperor.hpproject.ui.characters.list
 
 import androidx.lifecycle.viewModelScope
 import com.emperor.hpproject.domain.Repository
+import com.emperor.hpproject.domain.models.DomainResponse
 import com.emperor.hpproject.utils.mvi.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -52,7 +53,10 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
      * @param value search param
      */
     private fun searchCharacters(value: String) = viewModelScope.launch {
-        val filteredCharacters = repository.filterCharacters(value.trim())
-        setState { copy(searchedList = filteredCharacters) }
+        when (val filteredCharacters = repository.filterCharacters(value.trim())) {
+            is DomainResponse.Error -> {
+            }
+            is DomainResponse.Success -> setState { copy(searchedList = filteredCharacters.result) }
+        }
     }
 }

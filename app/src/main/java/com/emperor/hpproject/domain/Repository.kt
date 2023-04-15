@@ -19,5 +19,5 @@ interface Repository {
     /**
      * Filter character list
      */
-    suspend fun filterCharacters(name: String): List<HPCharacter>
+    suspend fun filterCharacters(name: String): DomainResponse<List<HPCharacter>>
 }

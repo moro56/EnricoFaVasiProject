@@ -43,6 +43,20 @@ class RepositoryTest {
     }
 
     @Test
+    fun `load filtered characters is successful`() = runTest {
+        coEvery { characterDao.getFilteredCharacters(any()) } returns listOf(
+            characterMock1,
+            characterMock2
+        ).toLocalHPCharacterList()
+
+        val result = repository.filterCharacters("name")
+
+        Assert.assertNotNull(result)
+        Assert.assertTrue(result is DomainResponse.Success)
+        Assert.assertEquals(2, (result as DomainResponse.Success).result.size)
+    }
+
+    @Test
     fun `download characters is successful`() = runTest {
         coEvery { restApi.loadAllCharacters() } returns listOf(characterMock1, characterMock2)
         coJustRun { characterDao.insertAll(any(), any()) }
