@@ -9,4 +9,20 @@
     <string name="character_students">Students</string>
     <string name="character_staff">Staff</string>
     <string name="character_no_house">No House</string>
+
+    <string name="character_info_species">Species</string>
+    <string name="character_info_gender">Gender</string>
+    <string name="character_info_house">House</string>
+    <string name="character_info_date_of_birth">Date of birth</string>
+    <string name="character_info_wizard">Wizard</string>
+    <string name="character_info_ancestry">Ancestry</string>
+    <string name="character_info_eye_colour">Eye colour</string>
+    <string name="character_info_hair_colour">Hair colour</string>
+    <string name="character_info_wand">Wand</string>
+    <string name="character_info_patronus">Patronus</string>
+    <string name="character_info_student">Student</string>
+    <string name="character_info_staff">Staff</string>
+    <string name="character_info_actor">Actor</string>
+    <string name="character_info_alternate_actors">Alternate actors</string>
+    <string name="character_info_alive">Alive</string>
 </resources>
