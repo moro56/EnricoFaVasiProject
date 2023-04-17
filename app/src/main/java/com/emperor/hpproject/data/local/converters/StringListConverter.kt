@@ -8,5 +8,6 @@ class StringListConverter {
     fun fromListStringToString(stringList: List<String>): String = stringList.joinToString("||")
 
     @TypeConverter
-    fun toListStringFromString(stringList: String): List<String> = stringList.split("||")
+    fun toListStringFromString(stringList: String): List<String> =
+        if (stringList.isBlank()) listOf() else stringList.split("||")
 }

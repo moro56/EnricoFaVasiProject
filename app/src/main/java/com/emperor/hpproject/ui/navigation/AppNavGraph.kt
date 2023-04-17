@@ -31,7 +31,9 @@ fun AppNavGraph(
             NavRoute.DETAILS.value + "/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) {
-            CharactersDetailsScreen(modifier = modifier)
+            CharactersDetailsScreen(modifier = modifier, onClose = {
+                navController.popBackStack()
+            })
         }
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -12,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +39,7 @@ import com.emperor.hpproject.utils.hpCharacterMock
 @Composable
 fun CharactersDetailsScreen(
     modifier: Modifier,
+    onClose: () -> Unit,
     viewModel: CharactersDetailsViewModel = hiltViewModel()
 ) {
     // ViewModel state
@@ -45,20 +48,22 @@ fun CharactersDetailsScreen(
     CharactersDetailsScreenContent(
         modifier = modifier,
         character = uiState.value.character,
+        onClose = onClose
     )
 }
 
 @Composable
 fun CharactersDetailsScreenContent(
     modifier: Modifier,
-    character: HPCharacter?
+    character: HPCharacter?,
+    onClose: () -> Unit
 ) {
     Column(
         modifier = modifier
             .statusBarsPadding()
     ) {
         IconButton(onClick = {
-
+            onClose.invoke()
         }) {
             Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
         }
@@ -81,72 +86,83 @@ fun CharactersDetailsScreenContent(
                         contentScale = ContentScale.Crop
                     )
                 }
-                Text(text = character.name, style = MaterialTheme.typography.titleLarge)
+                Text(
+                    text = character.name,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
                 if (character.alternateNames.isNotEmpty()) {
                     Text(
                         text = character.alternateNames.joinToString(", "),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_species),
-                    value = character.species,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_gender),
-                    value = character.gender
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_house),
-                    value = character.house
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_date_of_birth),
-                    value = character.dateOfBirth ?: "-"
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_wizard),
-                    value = if (character.wizard) stringResource(id = R.string.yes).lowercase() else stringResource(
-                        id = R.string.no
-                    ).lowercase()
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_ancestry),
-                    value = character.ancestry
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_eye_colour),
-                    value = character.eyeColour
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_hair_colour),
-                    value = character.hairColour
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_wand),
-                    value = character.wandString
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_patronus),
-                    value = character.patronus
-                )
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_actor),
-                    value = character.actor
-                )
-                if (character.alternate_actors.isNotEmpty()) {
-                    CharacterInfo(
-                        key = stringResource(id = R.string.character_info_alternate_actors),
-                        value = character.alternate_actors.joinToString(", ")
-                    )
+                Card(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(top = 16.dp)
+                ) {
+                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_species),
+                            value = character.species
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_gender),
+                            value = character.gender
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_house),
+                            value = character.house
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_date_of_birth),
+                            value = character.dateOfBirth ?: "-"
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_wizard),
+                            value = if (character.wizard) stringResource(id = R.string.yes).lowercase() else stringResource(
+                                id = R.string.no
+                            ).lowercase()
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_ancestry),
+                            value = character.ancestry
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_eye_colour),
+                            value = character.eyeColour
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_hair_colour),
+                            value = character.hairColour
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_wand),
+                            value = character.wandString
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_patronus),
+                            value = character.patronus
+                        )
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_actor),
+                            value = character.actor
+                        )
+                        if (character.alternate_actors.isNotEmpty()) {
+                            CharacterInfo(
+                                key = stringResource(id = R.string.character_info_alternate_actors),
+                                value = character.alternate_actors.joinToString(", ")
+                            )
+                        }
+                        CharacterInfo(
+                            key = stringResource(id = R.string.character_info_alive),
+                            value = if (character.alive) stringResource(id = R.string.yes).lowercase() else stringResource(
+                                id = R.string.no
+                            ).lowercase()
+                        )
+                    }
                 }
-                CharacterInfo(
-                    key = stringResource(id = R.string.character_info_alive),
-                    value = if (character.alive) stringResource(id = R.string.yes).lowercase() else stringResource(
-                        id = R.string.no
-                    ).lowercase()
-                )
             }
         } else {
             Box(modifier = Modifier.fillMaxSize())
@@ -161,6 +177,6 @@ fun CharactersDetailsScreenContentPreview() {
         CharactersDetailsScreenContent(
             Modifier.fillMaxSize(),
             hpCharacterMock
-        )
+        ) {}
     }
 }
