@@ -30,6 +30,7 @@ class CharactersDetailsViewModel @Inject constructor(
     private fun loadCharacter(id: String) = viewModelScope.launch {
         when (val character = repository.getCharacter(id)) {
             is DomainResponse.Error -> {
+                // TODO show SnackBar
             }
             is DomainResponse.Success -> setState { copy(character = character.result) }
         }
