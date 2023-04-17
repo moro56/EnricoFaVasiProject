@@ -51,7 +51,11 @@ import com.emperor.hpproject.ui.theme.AppTheme
 import com.emperor.hpproject.utils.hpCharacterMock
 
 @Composable
-fun CharactersListScreen(modifier: Modifier, viewModel: CharactersListViewModel = hiltViewModel()) {
+fun CharactersListScreen(
+    modifier: Modifier,
+    onClick: (HPCharacter) -> Unit,
+    viewModel: CharactersListViewModel = hiltViewModel()
+) {
     // ViewModel state
     val uiState = viewModel.uiState.collectAsState()
 
@@ -65,7 +69,7 @@ fun CharactersListScreen(modifier: Modifier, viewModel: CharactersListViewModel 
             viewModel.sendEvent(CharactersListContract.Event.SearchCharacters(it))
         },
         onClick = {
-
+            onClick.invoke(it)
         }
     )
 }

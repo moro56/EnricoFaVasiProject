@@ -28,4 +28,7 @@ data class HPCharacter(
     val isWizardStringResource: Int
         @StringRes
         get() = if (wizard) R.string.yes else R.string.no
+
+    val wandString: String
+        get() = "${wand.core}, ${wand.wood} ${if (wand.length != null) "(${wand.length})" else ""}"
 }

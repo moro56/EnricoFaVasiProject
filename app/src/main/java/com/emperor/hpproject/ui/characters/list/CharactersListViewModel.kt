@@ -55,6 +55,7 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
     private fun searchCharacters(value: String) = viewModelScope.launch {
         when (val filteredCharacters = repository.filterCharacters(value.trim())) {
             is DomainResponse.Error -> {
+                // TODO show SnackBar
             }
             is DomainResponse.Success -> setState { copy(searchedList = filteredCharacters.result) }
         }

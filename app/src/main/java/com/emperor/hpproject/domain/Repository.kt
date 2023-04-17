@@ -18,6 +18,15 @@ interface Repository {
 
     /**
      * Filter character list
+     *
+     * @param name search param
      */
     suspend fun filterCharacters(name: String): DomainResponse<List<HPCharacter>>
+
+    /**
+     * Get specific character
+     *
+     * @param id character id
+     */
+    suspend fun getCharacter(id: String): DomainResponse<HPCharacter>
 }

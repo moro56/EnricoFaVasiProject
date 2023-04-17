@@ -4,6 +4,7 @@ import com.emperor.hpproject.data.local.dao.CharacterDao
 import com.emperor.hpproject.data.network.RestApi
 import com.emperor.hpproject.data.network.models.RemoteHPCharacter
 import com.emperor.hpproject.data.network.models.RemoteHPWand
+import com.emperor.hpproject.domain.ext.toLocalHPCharacter
 import com.emperor.hpproject.domain.ext.toLocalHPCharacterList
 import com.emperor.hpproject.domain.models.DomainResponse
 import io.mockk.coEvery
@@ -54,6 +55,18 @@ class RepositoryTest {
         Assert.assertNotNull(result)
         Assert.assertTrue(result is DomainResponse.Success)
         Assert.assertEquals(2, (result as DomainResponse.Success).result.size)
+    }
+
+
+    @Test
+    fun `get specific character is successful`() = runTest {
+        coEvery { characterDao.getCharacterById(any()) } returns characterMock1.toLocalHPCharacter()
+
+        val result = repository.getCharacter("id")
+
+        Assert.assertNotNull(result)
+        Assert.assertTrue(result is DomainResponse.Success)
+        Assert.assertEquals(characterMock1.name, (result as DomainResponse.Success).result.name)
     }
 
     @Test
