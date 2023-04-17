@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) :
     private fun downloadCharacters() = viewModelScope.launch {
         when (val response = repository.downloadCharacters()) {
             is DomainResponse.Error -> {
-
+                // TODO show SnackBar
             }
             is DomainResponse.Success -> {}
         }
